@@ -17,7 +17,7 @@ public class BulletBehaviour : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D (Collision col) {
+	void OnCollisionEnter2D (Collision2D col) {
 		if (col.gameObject.name == "Wall" && bounce < bounceLimit) {
 			//do bounce thing
 		}
