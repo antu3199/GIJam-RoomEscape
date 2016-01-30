@@ -61,7 +61,7 @@ public class TurretScript : MonoBehaviour
 				yield return new WaitForSeconds (_StartOnAwakeDelay); 
 			}
 			//NOTE: THIS STARTS SHOOTING ----------------------------------------
-			//StartShotRoutine();
+			StartShotRoutine();
 		}
 		rend = GetComponent<SpriteRenderer> ();
 	
