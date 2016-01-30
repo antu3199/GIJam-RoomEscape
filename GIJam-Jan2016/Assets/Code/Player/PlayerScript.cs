@@ -3,10 +3,12 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
+
 	public float speed;
 	public Rigidbody2D rb;
-	public hp = 100;
-	public mp = 50;
+	public int mp = 50;
+	public int hp = 100;
+	public int damage = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -34,10 +36,23 @@ public class PlayerScript : MonoBehaviour {
 			rb.AddForce (Vector2.right * speed);
 		}
 	}
-	void OnCollisionEnter2D (collision col){
-		if (col.gameObject.name == "Bullet") {
+	void OnCollisionEnter2D (Collision2D col){
+		if (col.gameObject.tag == "Bullet") {
+
+			GameObject hpBar = GameObject.Find ("HpBar");
+
+			BulletObject bullet = col.gameObject.GetComponent<BulletObject> ();
+			GuiScript hpSprite = hpBar.GetComponent<GuiScript>();
+			hp -= bullet.bulletDamage;
+
+			hpSprite.adjustHP(bullet.bulletDamage);
+			checkHp ();
 			Destroy (col.gameObject);
-			hp -= 10;
+		}
+	}
+	void checkHp() {
+		if (hp <= 0){
+			Debug.Log ("Game Over");
 		}
 	}
 }

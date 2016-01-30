@@ -7,8 +7,9 @@ using System;
 /// Ubh base shot.
 /// Each shot pattern classes inherit this class.
 /// </summary>
-public abstract class BulletBehaviour : MonoBehaviour
-{
+public abstract class BulletBehaviour : Singleton<BulletBehaviour> {
+
+
 
 	// "Set a bullet prefab for the shot. (ex. sprite or model)"
 	public GameObject _BulletPrefab;
