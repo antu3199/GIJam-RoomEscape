@@ -4,7 +4,9 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 
 	public float speed;
-	 public Rigidbody2D rb;
+	public Rigidbody2D rb;
+	public hp = 100;
+	public mp = 50;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +33,11 @@ public class PlayerScript : MonoBehaviour {
 			
 			rb.AddForce (Vector2.right * speed);
 		}
-
-
+	}
+	void OnCollisionEnter2D (collision col){
+		if (col.gameObject.name == "Bullet") {
+			Destroy (col.gameObject);
+			hp -= 10;
+		}
 	}
 }
