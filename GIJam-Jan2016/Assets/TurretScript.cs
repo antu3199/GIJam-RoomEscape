@@ -13,13 +13,13 @@ public class TurretScript : MonoBehaviour
 	public class ShotInfo
 	{
 		// "Set a shot pattern component (inherits UbhBaseShot)."
-		public BulletClassScript _ShotObj;
+		public BulletBehaviour _ShotObj;
 		// "Set a delay time to starting next shot pattern. (sec)"
 		public float _AfterDelay;
 	}
 
 	// "Axis on bullet move."
-	public ControllerScript.AXIS _AxisMove = ControllerScript.AXIS.X_AND_Y;
+
 	// "This flag starts a shot routine at same time as instantiate."
 	public bool _StartOnAwake = true;
 	// "Set a delay time at using Start On Awake. (sec)"
@@ -29,14 +29,14 @@ public class TurretScript : MonoBehaviour
 	// "This flag makes a shot routine randomly."
 	public bool _AtRandom = false;
 	// "List of shot information. this size is necessary at least 1 or more."
-	public List<ShotInfo> _ShotList = new List<ShotInfo>();
+	public List<ShotInfo> _bulletList = new List<ShotInfo>();
 	bool _Shooting;
 
 	IEnumerator Start ()
 	{
 		if (_StartOnAwake) {
 			if (0f < _StartOnAwakeDelay) {
-				yield return StartCoroutine(ControllerScript.WaitForSeconds(_StartOnAwakeDelay));
+				yield return new WaitForSeconds (_StartOnAwakeDelay); 
 			}
 			StartShotRoutine();
 		}
@@ -57,22 +57,22 @@ public class TurretScript : MonoBehaviour
 
 	IEnumerator ShotCoroutine ()
 	{
-		if (_ShotList == null || _ShotList.Count <= 0) {
+		if (_bulletList == null || _bulletList.Count <= 0) {
 			Debug.LogWarning("Cannot shot because ShotList is not set.");
 			yield break;
 		}
 
 		bool enableShot = false;
-		for (int i = 0; i < _ShotList.Count; i++) {
-			if (_ShotList[i]._ShotObj != null) {
+		for (int i = 0; i < _bulletList.Count; i++) {
+			if (_bulletList[i]._ShotObj != null) {
 				enableShot = true;
 				break;
 			}
 		}
 
 		bool enableDelay = false;
-		for (int i = 0; i < _ShotList.Count; i++) {
-			if (0f < _ShotList[i]._AfterDelay) {
+		for (int i = 0; i < _bulletList.Count; i++) {
+			if (0f < _bulletList[i]._AfterDelay) {
 				enableDelay = true;
 				break;
 			}
@@ -93,7 +93,7 @@ public class TurretScript : MonoBehaviour
 		}
 		_Shooting = true;
 
-		var tmpShotInfoList = new List<ShotInfo>(_ShotList);
+		var tmpShotInfoList = new List<ShotInfo>(_bulletList);
 
 		int nowIndex = 0;
 
@@ -108,7 +108,8 @@ public class TurretScript : MonoBehaviour
 			}
 
 			if (0f < tmpShotInfoList[nowIndex]._AfterDelay) {
-				yield return StartCoroutine(WaitForSeconds(tmpShotInfoList[nowIndex]._AfterDelay));
+				yield return new WaitForSeconds (tmpShotInfoList[nowIndex]._AfterDelay); 
+
 			}
 
 			if (_AtRandom) {
@@ -116,7 +117,7 @@ public class TurretScript : MonoBehaviour
 
 				if (tmpShotInfoList.Count <= 0) {
 					if (_Loop) {
-						tmpShotInfoList = new List<ShotInfo>(_ShotList);
+						tmpShotInfoList = new List<ShotInfo>(_bulletList);
 					} else {
 						break;
 					}
