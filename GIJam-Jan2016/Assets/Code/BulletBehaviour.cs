@@ -61,7 +61,7 @@ public abstract class BulletBehaviour : MonoBehaviour
 	protected virtual void Awake ()
 	{
 
-		BulletObject bullet = GetBullet(_BulletPrefab, Vector3.zero, Quaternion.identity, true);
+		//BulletObject bullet = GetBullet(_BulletPrefab, Vector3.zero, Quaternion.identity);
 	
 	}
 
@@ -98,11 +98,33 @@ public abstract class BulletBehaviour : MonoBehaviour
 	/// <summary>
 	/// Get BulletClassScript object from object pool.THIS IS WHERE IT IS INSTANTIATED !!!!!!!!!!!!!
 	/// </summary>
-	protected BulletObject GetBullet (GameObject bulletPrefab, Vector3 position, Quaternion rotation, bool forceInstantiate = false)
+	protected BulletObject GetBullet (GameObject bulletPrefab, Vector3 position, Quaternion rotation)
 	{
 
-		BulletObject bullet = bulletPrefab.GetComponent<BulletObject> ();
+		// get Bullet GameObject from ObjectPool
+	//	var bullet_gameObject = ObjectPoolClass.Instance.GetGameObject(_BulletPrefab, position, rotation, forceInstantiate);
 
+//		var bullet = bullet_gameObject.GetComponent<BulletObjectScript>();
+	//	if (bullet == null) {
+	//		bullet = bullet_gameObject.AddComponent<BulletObjectScript>();
+	//	}
+
+		// Instantiate because there is no free GameObject in object pool.
+	//	go = (GameObject) Instantiate(prefab, position, rotation);
+	//	go.transform.parent = _Transform;
+	//	goList.Add(go);
+
+
+		GameObject bulletGameObject =  (GameObject) Instantiate(bulletPrefab, position, rotation);
+
+
+		BulletObject bullet = bulletGameObject.GetComponent<BulletObject> ();
+
+		if (bullet == null) {
+			bullet = bulletGameObject.AddComponent<BulletObject>();
+		}
+
+	//	Debug.Log ("Bullet GOT!: "  + bullet);
 		return bullet;
 	}
 
@@ -117,10 +139,12 @@ public abstract class BulletBehaviour : MonoBehaviour
 		bool homing = false, Transform homingTarget = null, float homingAngleSpeed = 0f,
 		bool wave = false, float waveSpeed = 0f, float waveRangeSize = 0f)
 	{
+		
 		if (bullet == null) {
 			return;
 		}
 
+	
 		bullet.Shot(speed, angle, _AccelerationSpeed, _AccelerationTurn,
 			homing, homingTarget, homingAngleSpeed,
 			wave, waveSpeed, waveRangeSize);

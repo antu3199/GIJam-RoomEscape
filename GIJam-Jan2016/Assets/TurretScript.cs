@@ -104,6 +104,7 @@ public class TurretScript : MonoBehaviour
 
 			if (tmpShotInfoList[nowIndex]._ShotObj != null) {
 				tmpShotInfoList[nowIndex]._ShotObj.SetShotCtrl(this);
+			
 				tmpShotInfoList[nowIndex]._ShotObj.Shot();
 			}
 

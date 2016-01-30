@@ -34,6 +34,10 @@ public class BulletObject : MonoBehaviour
 		bool wave, float waveSpeed, float waveRangeSize)
 	{
 
+		if (gameObject.activeInHierarchy == false) {
+			return;
+		}
+
 		StartCoroutine(MoveCoroutine(speed, angle, accelSpeed, accelTurn,
 			homing, homingTarget, homingAngleSpeed,
 			wave, waveSpeed, waveRangeSize));
@@ -44,7 +48,13 @@ public class BulletObject : MonoBehaviour
 		bool wave, float waveSpeed, float waveRangeSize)
 	{
 
-		transform.eulerAngles.Set(transform.eulerAngles.x, transform.eulerAngles.y, angle);
+		Vector3 angleVector = Vector3.zero;
+
+		angleVector.Set(transform.eulerAngles.x, transform.eulerAngles.y, angle);
+
+
+		angleVector.Set(transform.eulerAngles.x, transform.eulerAngles.y, angle);
+		transform.eulerAngles = angleVector;
 
 
 	
@@ -106,8 +116,10 @@ public class BulletObject : MonoBehaviour
 			} else {
 				// acceleration turning.
 				float addAngle = accelTurn * Time.deltaTime;
+
+				angleVector.Set (angleVector.x, angleVector.y, angleVector.z + addAngle);
 			
-				transform.eulerAngles.Set(transform.eulerAngles.x, transform.eulerAngles.y , transform.eulerAngles.z + addAngle);
+				transform.eulerAngles = angleVector;
 			}
 			//END OF SPECIFIC BULLETS -----------------------------------------------------------------------
 			//STUFF THAT APPLIES TO ALL BULLETS:--------------------------------------------------------------------
@@ -118,7 +130,7 @@ public class BulletObject : MonoBehaviour
 	
 				// X and Y axis
 			transform.position += transform.up.normalized * speed * Time.deltaTime;
-		
+			transform.eulerAngles.Set(transform.eulerAngles.x, transform.eulerAngles.y , 5.0f);
 
 			yield return 0;
 
