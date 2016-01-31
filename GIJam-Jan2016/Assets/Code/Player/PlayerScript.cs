@@ -9,6 +9,7 @@ public class PlayerScript : Singleton<PlayerScript> {
 	public Rigidbody2D rb;
 	public static float mp = 50;
 	public static float hp = 100;
+	public static bool Dead;
 	public float damage = 10;
 	float distanceScale;
 	public GameObject shield;
@@ -24,27 +25,32 @@ public class PlayerScript : Singleton<PlayerScript> {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
+
+		hp = 100;
+		mp = 50;
+
 		mpCounter = 20;
 		counter = 0;
+		Dead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	//	Debug.Log ("test2");
 
-		if( Input.GetKey(KeyCode.UpArrow)){
+		if( Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ){
 			
 			rb.AddForce (Vector2.up * speed);
 		}
-		if( Input.GetKey(KeyCode.DownArrow)){
+		if( Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
 			
 			rb.AddForce (Vector2.down * speed);
 		}
-		if( Input.GetKey(KeyCode.LeftArrow)){
+		if( Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)){
 			
 			rb.AddForce (Vector2.left * speed);
 		}
-		if( Input.GetKey(KeyCode.RightArrow)){
+		if( Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)){
 			
 			rb.AddForce (Vector2.right * speed);
 		}
