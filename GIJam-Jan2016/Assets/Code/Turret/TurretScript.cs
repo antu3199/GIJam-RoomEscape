@@ -52,6 +52,7 @@ public class TurretScript : MonoBehaviour
 	Vector3 Movement = Vector3.zero;
 
 	SpriteRenderer rend;
+	public int TurretType = 0;
 
 
 	IEnumerator Start ()
@@ -61,7 +62,7 @@ public class TurretScript : MonoBehaviour
 				yield return new WaitForSeconds (_StartOnAwakeDelay); 
 			}
 			//NOTE: THIS STARTS SHOOTING ----------------------------------------
-			StartShotRoutine();
+		//	StartShotRoutine();
 		}
 		rend = GetComponent<SpriteRenderer> ();
 	
@@ -119,6 +120,7 @@ public class TurretScript : MonoBehaviour
 			else if (animFrames > 120 && animFrames <= 150) {
 				rend.sprite = AnimSprites [4];
 				isAnim = false;
+				StartShotRoutine();
 			}
 
 		}
@@ -152,6 +154,10 @@ public class TurretScript : MonoBehaviour
 			if (tmpShotInfoList[nowIndex]._ShotObj != null) {
 				tmpShotInfoList[nowIndex]._ShotObj.SetShotCtrl(this);
 			
+				if (TurretType == 0) {
+					tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (directionFrom + 90.0f);
+				}
+
 				tmpShotInfoList[nowIndex]._ShotObj.Shot();
 			}
 

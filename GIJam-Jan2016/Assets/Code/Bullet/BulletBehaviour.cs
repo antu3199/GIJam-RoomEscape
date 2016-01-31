@@ -41,6 +41,10 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 
 	GameObject bulletContainer;
 
+	bool FixedAngle = false;
+	float AngleChange = 0.0f;
+
+
 
 	protected TurretScript  Enemy_Parent
 	{
@@ -104,19 +108,6 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 	protected BulletObject GetBullet (GameObject bulletPrefab, Vector3 position, Quaternion rotation)
 	{
 
-		// get Bullet GameObject from ObjectPool
-	//	var bullet_gameObject = ObjectPoolClass.Instance.GetGameObject(_BulletPrefab, position, rotation, forceInstantiate);
-
-//		var bullet = bullet_gameObject.GetComponent<BulletObjectScript>();
-	//	if (bullet == null) {
-	//		bullet = bullet_gameObject.AddComponent<BulletObjectScript>();
-	//	}
-
-		// Instantiate because there is no free GameObject in object pool.
-	//	go = (GameObject) Instantiate(prefab, position, rotation);
-	//	go.transform.parent = _Transform;
-	//	goList.Add(go);
-
 
 		GameObject bulletGameObject =  (GameObject) Instantiate(bulletPrefab, position, rotation);
 
@@ -149,9 +140,17 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 		if (bullet == null) {
 			return;
 		}
+		float angleShoot = 0.0f;
 
-	
-		bullet.Shot(speed, angle, _AccelerationSpeed, _AccelerationTurn,
+		if (FixedAngle == true) {
+
+			angleShoot = AngleChange;
+		} else {
+			angleShoot = angle;
+		}
+
+
+		bullet.Shot(speed, angleShoot, _AccelerationSpeed, _AccelerationTurn,
 			homing, homingTarget, homingAngleSpeed,
 			wave, waveSpeed, waveRangeSize);
 
@@ -171,6 +170,13 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 		CoroutineStarterScript.StartIE(DestroyBulletGameObjectCoroutine(goBullet));
 		*/
 	}
+	public void setFixedAngle (float angle){
+		FixedAngle = true;
+		AngleChange = angle;
+		
+
+	}
+
 
 	/*
 	//Really destroys gameobject
