@@ -16,7 +16,9 @@ public class Menu : MonoBehaviour {
 			Screen.height - (displace * 2 - (displace /5))), "Main Menu");
 
 		if(GUI.Button(new Rect(Screen.width / 2 - (boxW / 2), Screen.height - displace * (1 + 3), boxW, boxH), "Start Game")) {
-			SceneManager.LoadScene("Level1");
+			SceneManager.LoadScene("LevelRoom");
+			GameManager.Level = 1;
+		
 			Debug.Log ("Load level 1");
 		}
 			

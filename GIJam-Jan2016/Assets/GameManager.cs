@@ -48,7 +48,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 		if (Level == 1) {
 			TotalCash = 100.0f;
 			Cash = 100.0f;
-
+			CashIncrease = 200.0f;
 			timeLimit = 10.0f;
 		} else if (Level == 2) {
 			timeLimit = 15.0f;
