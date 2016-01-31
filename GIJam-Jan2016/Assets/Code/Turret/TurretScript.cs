@@ -18,7 +18,7 @@ public class TurretScript : MonoBehaviour
 		public float _AfterDelay;
 	}
 
-	public List<Sprite> AnimSprites; 
+	public List<Sprite> AnimSprites = new List<Sprite>(); 
 	public float AnimSpeed = 1;
 	// "Axis on bullet move."
 
@@ -62,10 +62,10 @@ public class TurretScript : MonoBehaviour
 				yield return new WaitForSeconds (_StartOnAwakeDelay); 
 			}
 			//NOTE: THIS STARTS SHOOTING ----------------------------------------
-		//	StartShotRoutine();
+			//StartShotRoutine();
 		}
 		rend = GetComponent<SpriteRenderer> ();
-	
+		Player = GameObject.FindWithTag ("Player").transform;
 
 	}
 
@@ -74,32 +74,83 @@ public class TurretScript : MonoBehaviour
 		_Shooting = false;
 	}
 	void Update(){
-		
-		if (LockonTurret == true) {
-			float _Angle = AngleMathFunctions.Instance.GetZangleFromTwoPosition(transform, Player);
-			Vector3 angleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, _Angle);
-			transform.eulerAngles = angleVector;
-		}
+
+	
+
+
 
 		if (isSpawning == true) {
 			
 
-			if (directionFrom== 90) {
+			if (directionFrom == 90) {
 				Movement.Set (Movement.x, Movement.y - 0.02f, Movement.z);
 				transform.position = Movement;
-			
-			//	transform.position.Set (transform.position.x, transform.position.y - 10.0f, transform.position.z);
-			//	transform.position.Set (0.0f, 0.0f, 0.0f);
-				Debug.Log (directionFrom);
-			}
-			if (transform.position.y <= 3.8f) {
+				if (transform.position.y <= 2.8f) {
+					isSpawning = false;
+					isAnim = true;
 
-		
-				isSpawning = false;
-				isAnim = true;
+					if (TurretType == 1) {
+						LockonTurret = true;
+					}
+
+				}
+			} else if (directionFrom == 270) {
+				Movement.Set (Movement.x, Movement.y + 0.02f, Movement.z);
+				transform.position = Movement;
+
+				if (transform.position.y >= -3.7f) {
+					isSpawning = false;
+					isAnim = true;
+					if (TurretType == 1) {
+						LockonTurret = true;
+					}
+
+				}
+
 
 			}
+			else if (directionFrom == 180) {
+				Movement.Set (Movement.x + 0.02f, Movement.y , Movement.z);
+				transform.position = Movement;
+
+				if (transform.position.x >= -7.0f) {
+					isSpawning = false;
+					isAnim = true;
+					if (TurretType == 1) {
+						LockonTurret = true;
+					}
+
+				}
+
+			}
+			else if (directionFrom == 0) {
+				Movement.Set (Movement.x - 0.02f, Movement.y , Movement.z);
+				transform.position = Movement;
+
+				if (transform.position.x <= 7.0f) {
+					isSpawning = false;
+					isAnim = true;
+					if (TurretType == 1) {
+						LockonTurret = true;
+					}
+
+				}
+
+			}
+
+
 		}
+
+		if (LockonTurret == true) {
+
+
+
+			float _Angle = AngleMathFunctions.Instance.GetZangleFromTwoPosition(transform, Player);
+			Vector3 angleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, _Angle);
+			transform.eulerAngles = angleVector;
+
+		}
+
 
 		if (isAnim == true) {
 			animFrames+= AnimSpeed;
@@ -154,8 +205,19 @@ public class TurretScript : MonoBehaviour
 			if (tmpShotInfoList[nowIndex]._ShotObj != null) {
 				tmpShotInfoList[nowIndex]._ShotObj.SetShotCtrl(this);
 			
-				if (TurretType == 0) {
-					tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (directionFrom + 90.0f);
+				if (TurretType == 0 ) {
+					if (directionFrom == 90) {
+						tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (180);
+					} else if (directionFrom == 270) {
+						tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (0.0f);
+					} else if (directionFrom == 180) {
+						tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (270.0f);
+					}
+					else if (directionFrom == 0) {
+						tmpShotInfoList [nowIndex]._ShotObj.setFixedAngle (90.0f);
+					}
+				
+
 				}
 
 				tmpShotInfoList[nowIndex]._ShotObj.Shot();
@@ -198,14 +260,19 @@ public class TurretScript : MonoBehaviour
 		StopAllCoroutines();
 		_Shooting = false;
 	}
+	public void setTurretType (int type){
+		TurretType = type;
+
+	}
+
 
 	public void setAnim (bool anim, float direction){
 		isSpawning = anim;
 		directionFrom = direction;
-		//Debug.Log ("setAnim");
+
 
 		if (directionFrom == 0) {
-			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 270);
+			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 90.0f);
 			transform.eulerAngles = initAngleVector;
 		}
 		else if (directionFrom == 90) {
@@ -213,14 +280,15 @@ public class TurretScript : MonoBehaviour
 			transform.eulerAngles = initAngleVector;
 
 		} else if (directionFrom == 180) {
-			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 90);
+			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 270.0f);
 			transform.eulerAngles = initAngleVector;
 		} else if (directionFrom == 270) {
-			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 180);
+			initAngleVector = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y, 0.0f);
 			transform.eulerAngles = initAngleVector;
 		}
 
 		Movement = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+
 	}
 
 }
