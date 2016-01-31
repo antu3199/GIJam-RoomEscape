@@ -15,6 +15,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 
 	public static bool FinishedRound;
 	public static bool StopAllBullets;
+	public static bool WinLevel = false;
 
 
 
@@ -44,6 +45,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
+		WinLevel = false;
 		Portal.SetActive (false);
 		if (Level == 1) {
 			TotalCash = 100.0f;
@@ -60,7 +62,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 			
 		StopAllBullets = false;
 		FinishedRound = false;
-
+		PlayerScript.Dead = false;
 		LevelText.text = "FLOOR: " + Level;
 
 		/*

@@ -50,6 +50,7 @@ public class PortalScript : MonoBehaviour {
 			}
 		}
 
+	
 
 		if (isFadingIn) {
 
@@ -73,13 +74,10 @@ public class PortalScript : MonoBehaviour {
 			else{
 				isFadingIn = false;
 
-				if (FadeColour == 1.0f){
-					CutsceneFadeOut ("White");	
-				}
-
 				if (FadeColour == 0.0f && PlayerScript.Dead == false) {
 					GameManager.Level++;
 					GameManager.FinishedRound = false;
+					PlayerScript.Dead = false;
 					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
 
 					GameManager.TotalCash += GameManager.CashIncrease;
@@ -90,6 +88,13 @@ public class PortalScript : MonoBehaviour {
 					Application.LoadLevel ("LevelRoom");
 					PlayerScript.Dead = false;
 				}
+
+
+				if (FadeColour == 1.0f){
+					CutsceneFadeOut ("White");	
+				}
+
+				 
 
 			}
 
@@ -119,17 +124,23 @@ public class PortalScript : MonoBehaviour {
 		if (FadeBackground == null) {
 			FadeBackground = GameObject.FindWithTag ("Fade");
 		}
+		if (ZoomIn == false) {
+			FadeBackground.GetComponent<GUITexture> ().enabled = true;
+			isFadingIn = true;
+			isFadingOut = false;
+			FadeIn = 0.0f;
+			if (Colour == "Black") {
+				FadeColour = 0.0f;
 
-		FadeBackground.GetComponent<GUITexture>().enabled = true;
-		isFadingIn = true;
-		isFadingOut = false;
-		FadeIn = 0.0f;
-		if (Colour == "Black") {
+			} else if (Colour == "White") {
+				FadeColour = 1.0f;
+			}
+		} else {
 			FadeColour = 0.0f;
-
-		} else if (Colour == "White") {
-			FadeColour = 1.0f;
 		}
+	
+
+
 		FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 	}
 	public void CutsceneFadeOut (string Colour ){
