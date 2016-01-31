@@ -39,6 +39,9 @@ public	List<GameObject> Spawners = new List<GameObject>();
 	int MaxCount = 0;
 	int MaxEnemies = 10;
 
+
+	public Text LevelText;
+
 	// Use this for initialization
 	void Start () {
 		Portal.SetActive (false);
@@ -58,6 +61,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 		StopAllBullets = false;
 		FinishedRound = false;
 
+		LevelText.text = "FLOOR: " + Level;
 
 		/*
 		while (Cash >= 100.0f) {

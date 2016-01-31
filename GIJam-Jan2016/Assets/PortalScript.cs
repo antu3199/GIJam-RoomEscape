@@ -18,7 +18,7 @@ public class PortalScript : MonoBehaviour {
 	bool isFadingOut = false;
 
 	public GameObject Timer; 
-
+	public GameObject LevelText;
 
 
 
@@ -56,11 +56,17 @@ public class PortalScript : MonoBehaviour {
 
 			if (FadeColour == 0.0f) {
 				Timer.SetActive (false);
+				LevelText.SetActive (false);
 
 			}
 
 			if (FadeIn + 0.015f < 1.0f){
 				FadeIn += 0.02f;
+
+				if (FadeColour == 1.0f){
+					FadeIn += 0.02f;
+				}
+
 
 				FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 			}
