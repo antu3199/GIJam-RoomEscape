@@ -108,21 +108,24 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 	protected BulletObject GetBullet (GameObject bulletPrefab, Vector3 position, Quaternion rotation)
 	{
 
+		if (GameManager.StopAllBullets == false) {
+			GameObject bulletGameObject = (GameObject)Instantiate (bulletPrefab, position, rotation);
 
-		GameObject bulletGameObject =  (GameObject) Instantiate(bulletPrefab, position, rotation);
+
+			BulletObject bullet = bulletGameObject.GetComponent<BulletObject> ();
+
+			if (bullet == null) {
+				bullet = bulletGameObject.AddComponent<BulletObject> ();
+			}
 
 
-		BulletObject bullet = bulletGameObject.GetComponent<BulletObject> ();
-
-		if (bullet == null) {
-			bullet = bulletGameObject.AddComponent<BulletObject>();
+			bullet.gameObject.transform.SetParent (bulletContainer.transform);
+			return bullet;
+		} else {
+			return null;
 		}
-
-
-		bullet.gameObject.transform.SetParent (bulletContainer.transform);
-
 	//	Debug.Log ("Bullet GOT!: "  + bullet);
-		return bullet;
+	
 	}
 
 	/// <summary>
@@ -136,25 +139,27 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 		bool homing = false, Transform homingTarget = null, float homingAngleSpeed = 0f,
 		bool wave = false, float waveSpeed = 0f, float waveRangeSize = 0f)
 	{
-		
-		if (bullet == null) {
-			return;
+		if (GameManager.StopAllBullets == false) {
+
+
+			if (bullet == null) {
+				return;
+			}
+			float angleShoot = 0.0f;
+
+			if (FixedAngle == true) {
+
+				angleShoot = AngleChange;
+			} else {
+				angleShoot = angle;
+			}
+
+
+			bullet.Shot (speed, angleShoot, _AccelerationSpeed, _AccelerationTurn,
+				homing, homingTarget, homingAngleSpeed,
+				wave, waveSpeed, waveRangeSize);
+
 		}
-		float angleShoot = 0.0f;
-
-		if (FixedAngle == true) {
-
-			angleShoot = AngleChange;
-		} else {
-			angleShoot = angle;
-		}
-
-
-		bullet.Shot(speed, angleShoot, _AccelerationSpeed, _AccelerationTurn,
-			homing, homingTarget, homingAngleSpeed,
-			wave, waveSpeed, waveRangeSize);
-
-
 	}
 
 	/// <summary>

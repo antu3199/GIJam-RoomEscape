@@ -75,7 +75,10 @@ public class TurretScript : MonoBehaviour
 	}
 	void Update(){
 
-	
+		if (GameManager.StopAllBullets == true) {
+
+			StopAllCoroutines ();
+		}
 
 
 

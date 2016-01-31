@@ -14,6 +14,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 	public static float CashIncreaseIncrease = 50.0f;
 
 	public static bool FinishedRound;
+	public static bool StopAllBullets;
 
 
 
@@ -54,7 +55,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 			timeLimit = LevelTimeLimit;
 		}
 			
-
+		StopAllBullets = false;
 		FinishedRound = false;
 
 
@@ -166,17 +167,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 
 	
 
-		if (TimerActive == true) {
-
-	
-
-
-
-
-
-
-
-
+		if (TimerActive == true && PlayerScript.Dead == false) {
 
 
 
@@ -205,6 +196,8 @@ public	List<GameObject> Spawners = new List<GameObject>();
 				Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("White");
 				TimerActive = false;
 				FinishedRound = true;
+				StopAllBullets = true;
+
 				//	Application.LoadLevel ("MainMenu");
 			}
 		}

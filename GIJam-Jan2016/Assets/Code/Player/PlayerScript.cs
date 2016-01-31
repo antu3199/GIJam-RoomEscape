@@ -10,15 +10,53 @@ public class PlayerScript : MonoBehaviour {
 	public int hp = 100;
 	public int damage = 10;
 
+	public GameObject Portal;
+
+	float Fade = 0.0f;
+	bool isFading = false;
+
+	public static bool Dead = false;
+
+	SpriteRenderer rend;
+	public GameObject Flame;
+	SpriteRenderer rend2;
+
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
+		rend = GetComponent<SpriteRenderer> ();
+		rend2 = Flame.GetComponent<SpriteRenderer> ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	//	Debug.Log ("test2");
 
+		if (Dead == true) {
+			if (isFading == true) {
+				Fade += 0.02f;
+				rend.GetComponent<SpriteRenderer>().color = new Color (0.0f, 0.0f, 0.0f,Fade);
+				rend2.GetComponent<SpriteRenderer>().color = new Color (0.0f, 0.0f, 0.0f,Fade);
+				if (Fade >= 1.0f) {
+					Portal.SetActive (true);
+					Portal.GetComponent<SpriteRenderer> ().enabled = false;
+
+					isFading = false;
+					Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("Black");
+				}
+			}
+		
+
+	
+
+
+
+		} else {
+
+		
+	
 		if( Input.GetKey(KeyCode.UpArrow)){
 			
 			rb.AddForce (Vector2.up * speed);
@@ -35,9 +73,10 @@ public class PlayerScript : MonoBehaviour {
 			
 			rb.AddForce (Vector2.right * speed);
 		}
+		}
 	}
 	void OnCollisionEnter2D (Collision2D col){
-		if (col.gameObject.tag == "Bullet") {
+		if (col.gameObject.tag == "Bullet" && Dead == false) {
 
 			GameObject hpBar = GameObject.Find ("HpBar");
 
@@ -53,6 +92,8 @@ public class PlayerScript : MonoBehaviour {
 	void checkHp() {
 		if (hp <= 0){
 			Debug.Log ("Game Over");
+			Dead = true;
+			isFading = true;
 		}
 	}
 }

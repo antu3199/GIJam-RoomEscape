@@ -21,6 +21,18 @@ public class BulletObject : MonoBehaviour
 	*/
 
 
+	void Update(){
+		if (GameManager.StopAllBullets == true) {
+
+			StopAllCoroutines ();
+			transform.position = Vector3.zero;
+			transform.localPosition = Vector3.zero;
+			transform.rotation =  Quaternion.identity;
+			transform.localRotation =  Quaternion.identity;
+		}
+
+	}
+
 
 
 	/// <summary>
@@ -33,13 +45,16 @@ public class BulletObject : MonoBehaviour
 		bool wave, float waveSpeed, float waveRangeSize)
 	{
 
-		if (gameObject.activeInHierarchy == false) {
-			return;
-		}
+		if (GameManager.StopAllBullets == false) {
+			
+			if (gameObject.activeInHierarchy == false) {
+				return;
+			}
 
-		StartCoroutine(MoveCoroutine(speed, angle, accelSpeed, accelTurn,
-			homing, homingTarget, homingAngleSpeed,
-			wave, waveSpeed, waveRangeSize));
+			StartCoroutine (MoveCoroutine (speed, angle, accelSpeed, accelTurn,
+				homing, homingTarget, homingAngleSpeed,
+				wave, waveSpeed, waveRangeSize));
+		}
 	}
 
 	IEnumerator MoveCoroutine (float speed, float angle, float accelSpeed, float accelTurn,

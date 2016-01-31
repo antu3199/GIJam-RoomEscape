@@ -62,8 +62,6 @@ public class PortalScript : MonoBehaviour {
 			if (FadeIn + 0.015f < 1.0f){
 				FadeIn += 0.02f;
 
-			
-
 				FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 			}
 			else{
@@ -73,7 +71,7 @@ public class PortalScript : MonoBehaviour {
 					CutsceneFadeOut ("White");	
 				}
 
-				if (FadeColour == 0.0f){
+				if (FadeColour == 0.0f && PlayerScript.Dead == false) {
 					GameManager.Level++;
 					GameManager.FinishedRound = false;
 					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
@@ -81,6 +79,10 @@ public class PortalScript : MonoBehaviour {
 					GameManager.TotalCash += GameManager.CashIncrease;
 					GameManager.Cash = GameManager.TotalCash;
 					Application.LoadLevel ("LevelRoom");
+				} else if (FadeColour == 0.0f && PlayerScript.Dead == true) {
+					GameManager.Cash = GameManager.TotalCash;
+					Application.LoadLevel ("LevelRoom");
+					PlayerScript.Dead = false;
 				}
 
 			}
