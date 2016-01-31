@@ -165,16 +165,7 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 	/// <summary>
 	/// Destroys game object-----------------------------------------------------------------
 	/// </summary>
-	protected void DestroyBulletGameObject (GameObject goBullet)
-	{
-		/*
-		//If shouldn't be released, don't release it
-		if (_UseAutoRelease == false || _AutoReleaseTime < 0f) {
-			return;
-		}
-		CoroutineStarterScript.StartIE(DestroyBulletGameObjectCoroutine(goBullet));
-		*/
-	}
+
 	public void setFixedAngle (float angle){
 		FixedAngle = true;
 		AngleChange = angle;
@@ -183,28 +174,4 @@ public abstract class BulletBehaviour : Singleton<BulletBehaviour>
 	}
 
 
-	/*
-	//Really destroys gameobject
-	IEnumerator DestroyBulletGameObjectCoroutine (GameObject goBullet)
-	{
-		/*float countUpTime = 0f;
-
-		while (true) {
-			if (goBullet == null || goBullet.activeInHierarchy == false) {
-				yield break;
-			}
-
-			if (_AutoReleaseTime <= countUpTime) {
-				break;
-			}
-
-			yield return 0;
-
-			countUpTime += GlobalTimerClass.Instance.DeltaTime;
-		}
-
-		ObjectPoolClass.Instance.ReleaseGameObject(goBullet);
-
-	}
-	*/
 }

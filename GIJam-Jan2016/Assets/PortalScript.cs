@@ -21,7 +21,6 @@ public class PortalScript : MonoBehaviour {
 	public GameObject LevelText;
 
 
-
 	// Use this for initialization
 	void Start () {
 		RotationVector  = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y,transform.eulerAngles.z);
@@ -43,18 +42,13 @@ public class PortalScript : MonoBehaviour {
 
 		if (ZoomIn == true) {
 			if (MainCamera.orthographicSize >= 1.0f) {
-
-			
 				MainCamera.orthographicSize -= ZoomSpeed;
-
 			}
 		}
 
 	
 
 		if (isFadingIn) {
-
-
 			if (FadeColour == 0.0f) {
 				Timer.SetActive (false);
 				LevelText.SetActive (false);
@@ -92,9 +86,7 @@ public class PortalScript : MonoBehaviour {
 
 				if (FadeColour == 1.0f){
 					CutsceneFadeOut ("White");	
-				}
-
-				 
+				} 
 
 			}
 
@@ -104,8 +96,6 @@ public class PortalScript : MonoBehaviour {
 
 			if (FadeIn - 0.015f > 0){
 				FadeIn -= 0.02f;
-
-			
 				FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 			}
 			else{
@@ -136,9 +126,6 @@ public class PortalScript : MonoBehaviour {
 				FadeColour = 1.0f;
 			}
 	 
-	
-
-
 		FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 	}
 	public void CutsceneFadeOut (string Colour ){

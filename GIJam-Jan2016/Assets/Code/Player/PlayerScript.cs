@@ -47,11 +47,6 @@ public class PlayerScript : MonoBehaviour {
 					Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("Black");
 				}
 			}
-		
-
-	
-
-
 
 		} else {
 

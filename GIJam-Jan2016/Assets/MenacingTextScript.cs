@@ -122,9 +122,6 @@ public class MenacingTextScript : MonoBehaviour {
 
 
 
-		foreach (char letter in message.ToCharArray()) {
 
-
-		}
 	}
 }

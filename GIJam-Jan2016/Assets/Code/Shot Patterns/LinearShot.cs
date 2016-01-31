@@ -55,7 +55,7 @@ public class LinearShot : BulletBehaviour
 
 
 			if (bullet == null) {
-				Debug.Log ("Bullet is NULL");
+			//	Debug.Log ("Bullet is NULL");
 				break;
 			}
 		

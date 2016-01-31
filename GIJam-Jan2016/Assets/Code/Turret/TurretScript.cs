@@ -32,7 +32,7 @@ public class TurretScript : MonoBehaviour
 	public bool _AtRandom = false;
 	// "List of shot information. this size is necessary at least 1 or more."
 	public List<ShotInfo> _bulletList = new List<ShotInfo>();
-	bool _Shooting;
+
 
 	public Transform Player;
 
@@ -40,9 +40,8 @@ public class TurretScript : MonoBehaviour
 
 	bool isSpawning = false;
 	bool isAnim = false;
-	float rotationAnim = 0.0f;
 
-	bool ableToShoot = false;
+
 
 	float directionFrom = 0;
 	float animFrames = 0;
@@ -69,10 +68,6 @@ public class TurretScript : MonoBehaviour
 
 	}
 
-	void OnDisable ()
-	{
-		_Shooting = false;
-	}
 	void Update(){
 
 		if (GameManager.StopAllBullets == true) {
@@ -252,7 +247,7 @@ public class TurretScript : MonoBehaviour
 
 		}
 
-		_Shooting = false;
+	
 	}
 
 	/// <summary>
@@ -261,7 +256,7 @@ public class TurretScript : MonoBehaviour
 	public void StopShotRoutine ()
 	{
 		StopAllCoroutines();
-		_Shooting = false;
+
 	}
 	public void setTurretType (int type){
 		TurretType = type;

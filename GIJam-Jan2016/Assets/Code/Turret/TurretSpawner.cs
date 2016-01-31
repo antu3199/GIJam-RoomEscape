@@ -13,7 +13,6 @@ public class TurretSpawner : MonoBehaviour {
 	const float RoomMinY = -4.6f;
 	const float RoomMaxY = 3.6f;
 
-	Vector3 initAngleVector = Vector3.zero;
 
 
 
