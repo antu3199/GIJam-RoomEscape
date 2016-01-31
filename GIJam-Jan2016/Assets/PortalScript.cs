@@ -124,7 +124,7 @@ public class PortalScript : MonoBehaviour {
 		if (FadeBackground == null) {
 			FadeBackground = GameObject.FindWithTag ("Fade");
 		}
-		if (ZoomIn == false) {
+
 			FadeBackground.GetComponent<GUITexture> ().enabled = true;
 			isFadingIn = true;
 			isFadingOut = false;
@@ -135,9 +135,7 @@ public class PortalScript : MonoBehaviour {
 			} else if (Colour == "White") {
 				FadeColour = 1.0f;
 			}
-		} else {
-			FadeColour = 0.0f;
-		}
+	 
 	
 
 

@@ -45,6 +45,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
+		
 		WinLevel = false;
 		Portal.SetActive (false);
 		if (Level == 1) {
@@ -110,7 +111,7 @@ public	List<GameObject> Spawners = new List<GameObject>();
 				Cash -= (500 + 50* Level);
 			} else {
 				RandTurret = 0;
-				Cash -= 400;
+				Cash -= 300;
 
 			}
 			int SpawnDirection = Random.Range (0, 4);
@@ -169,7 +170,9 @@ public	List<GameObject> Spawners = new List<GameObject>();
 		
 
 //		Debug.Log (Cash);
-
+		if (Input.GetKey(KeyCode.Escape)) {
+			Application.Quit ();
+		}
 
 	
 
