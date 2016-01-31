@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PortalScript : MonoBehaviour {
 
@@ -20,12 +21,18 @@ public class PortalScript : MonoBehaviour {
 	public GameObject Timer; 
 	public GameObject LevelText;
 
+	void Awake(){
+
+		gameObject.SetActive (false);
+	}
+
 
 	// Use this for initialization
 	void Start () {
 		RotationVector  = new Vector3 (transform.eulerAngles.x, transform.eulerAngles.y,transform.eulerAngles.z);
 		MainCamera = GameObject.FindWithTag ("MainCamera").GetComponent<Camera>();
 		FadeBackground = GameObject.FindWithTag ("Fade");
+
 	}
 	
 	// Update is called once per frame
@@ -43,6 +50,12 @@ public class PortalScript : MonoBehaviour {
 		if (ZoomIn == true) {
 			if (MainCamera.orthographicSize >= 1.0f) {
 				MainCamera.orthographicSize -= ZoomSpeed;
+				if (isFadingIn == false || FadeColour == 1.0f) {
+					FadeColour = 0.0f;
+					FadeIn = 0.0f;
+					isFadingIn = true;
+					FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
+				}
 			}
 		}
 
@@ -74,13 +87,28 @@ public class PortalScript : MonoBehaviour {
 					PlayerScript.Dead = false;
 					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
 
+					ZoomIn = false;
+
 					GameManager.TotalCash += GameManager.CashIncrease;
 					GameManager.Cash = GameManager.TotalCash;
-					Application.LoadLevel ("LevelRoom");
-				} else if (FadeColour == 0.0f && PlayerScript.Dead == true) {
+					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+				} else if (FadeColour == 0.0f && PlayerScript.Dead == true && GameManager.FinishedRound == false) {
 					GameManager.Cash = GameManager.TotalCash;
-					Application.LoadLevel ("LevelRoom");
+					GameManager.FinishedRound = false;
+					ZoomIn = false;
+					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 					PlayerScript.Dead = false;
+				} else if (FadeColour == 0.0f) {
+					GameManager.Level++;
+					GameManager.FinishedRound = false;
+					PlayerScript.Dead = false;
+					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
+
+					ZoomIn = false;
+
+					GameManager.TotalCash += GameManager.CashIncrease;
+					GameManager.Cash = GameManager.TotalCash;
+					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 				}
 
 
@@ -153,6 +181,9 @@ public class PortalScript : MonoBehaviour {
 
 		}
 
+	}
+	public bool isFading (){
+		return isFadingIn;
 	}
 
 

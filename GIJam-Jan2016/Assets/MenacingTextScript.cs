@@ -19,9 +19,9 @@ public class MenacingTextScript : MonoBehaviour {
 		} else if (GameManager.Level == 2) {
 			message = "Or will you be the \"The One?\" to pass?\nAim mouse to use shield";
 		} else if (GameManager.Level == 3) {
-			message = "Can you <S<U<R<V<I<V<E<? till the end?";
+			message = "Can you <S<U<R<V<I<V<E till the end?";
 		} else if (GameManager.Level == 4) {
-			message = "You must think you're so talented having made it this far\nBut let me tell you this...";
+			message = "You must think you're so talented, having made it thus far, however...";
 		} else if (GameManager.Level == 5) {
 			message = "<Y<o<u <w<i<l<l <n<o<t <m<a<k<e <i<t <t<o <t<h<e <e<n<d<";
 		} else if (GameManager.Level == 6) {
@@ -32,7 +32,7 @@ public class MenacingTextScript : MonoBehaviour {
 			message = "When you have <n<o <c<h<a<n<c<e of succeeding";
 		}
 		else if (GameManager.Level == 9) {
-			message = "What is it that gives you the determination to continue on?";
+			message = "What is it that gives you the >d>e>t>e>r>m>i>n>a>t>i>o>n\nto continue on?";
 		} else if (GameManager.Level == 10) {
 			message = "I do not understand.";
 		}
@@ -40,30 +40,33 @@ public class MenacingTextScript : MonoBehaviour {
 			message = "Give up.";
 		}
 		else if (GameManager.Level == 12) {
+			message = "Give up please?";
+		}
+		else if (GameManager.Level == 13) {
 			message = "Press ESC to end the game";
 		}
-		else if (GameManager.Level == 13) {
+		else if (GameManager.Level == 14) {
 			message = "Or that little X on the top right corner of the screen";
 		}
-		else if (GameManager.Level == 13) {
+		else if (GameManager.Level == 15) {
 			message = "Alt-F4 works too, if you're that kind of person";
 		}
-		else if (GameManager.Level == 14) {
+		else if (GameManager.Level == 16) {
 			message = "Why not take a break?";
 		}
-		else if (GameManager.Level == 15) {
-			message = "You'll never escape this room";
-		}
-		else if (GameManager.Level == 16) {
-			message = "Never";
-		}
 		else if (GameManager.Level == 17) {
-			message = "Ever";
+			message = "You'll never escape this room";
 		}
 		else if (GameManager.Level == 18) {
+			message = "Never";
+		}
+		else if (GameManager.Level == 19) {
+			message = "Ever";
+		}
+		else if (GameManager.Level == 20) {
 			message = "You'll never escape this room";
 		}
-		else if (GameManager.Level >= 19) {
+		else if (GameManager.Level >= 21) {
 			message = "I'm sorry.";
 		}
 

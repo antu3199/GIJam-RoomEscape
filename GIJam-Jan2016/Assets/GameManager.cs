@@ -202,7 +202,10 @@ public	List<GameObject> Spawners = new List<GameObject>();
 				timerText.text = "0";
 
 				Portal.SetActive (true);
-				Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("White");
+				if (Portal.GetComponent<PortalScript> ().isFading() == false) {
+					Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("White");
+				}
+
 				TimerActive = false;
 				FinishedRound = true;
 				StopAllBullets = true;
