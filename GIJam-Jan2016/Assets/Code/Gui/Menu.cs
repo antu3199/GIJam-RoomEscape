@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
 
@@ -15,15 +16,18 @@ public class Menu : MonoBehaviour {
 			Screen.height - (displace * 2 - (displace /5))), "Main Menu");
 
 		if(GUI.Button(new Rect(Screen.width / 2 - (boxW / 2), Screen.height - displace * (1 + 3), boxW, boxH), "Start Game")) {
-			Application.LoadLevel("Level 1");
+			SceneManager.LoadScene("Level1");
+			Debug.Log ("Load level 1");
 		}
 			
 		if(GUI.Button(new Rect(Screen.width / 2 - (boxW / 2), Screen.height - displace * (1 + 2), boxW, boxH), "Instructions")) {
-			Application.LoadLevel("instructions");
+			SceneManager.LoadScene("Instructions");
+			Debug.Log ("Load Instructions");
 		}
 
 		if(GUI.Button(new Rect(Screen.width / 2 - (boxW / 2), Screen.height - displace * (1 + 1), boxW, boxH), "Quit Game")) {
 			Application.Quit ();
+			Debug.Log ("Quit application");
 		}
 	}
 }
