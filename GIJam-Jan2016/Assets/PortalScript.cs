@@ -17,6 +17,9 @@ public class PortalScript : MonoBehaviour {
 	bool isFadingIn = false;
 	bool isFadingOut = false;
 
+	public GameObject Timer; 
+
+
 
 
 	// Use this for initialization
@@ -29,7 +32,6 @@ public class PortalScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		Debug.Log (GameManager.Level);
 
 		pRotate += 2.0f;
 		RotationVector.Set (transform.eulerAngles.x, transform.eulerAngles.y,pRotate);
@@ -51,8 +53,17 @@ public class PortalScript : MonoBehaviour {
 
 		if (isFadingIn) {
 
+
+			if (FadeColour == 0.0f) {
+				Timer.SetActive (false);
+
+			}
+
 			if (FadeIn + 0.015f < 1.0f){
 				FadeIn += 0.02f;
+
+			
+
 				FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 			}
 			else{
@@ -64,6 +75,11 @@ public class PortalScript : MonoBehaviour {
 
 				if (FadeColour == 0.0f){
 					GameManager.Level++;
+					GameManager.FinishedRound = false;
+					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
+
+					GameManager.TotalCash += GameManager.CashIncrease;
+					GameManager.Cash = GameManager.TotalCash;
 					Application.LoadLevel ("LevelRoom");
 				}
 
@@ -75,6 +91,8 @@ public class PortalScript : MonoBehaviour {
 
 			if (FadeIn - 0.015f > 0){
 				FadeIn -= 0.02f;
+
+			
 				FadeBackground.GetComponent<GUITexture>().color = new Color (FadeColour, FadeColour, FadeColour,FadeIn);
 			}
 			else{
@@ -90,6 +108,10 @@ public class PortalScript : MonoBehaviour {
 
 
 	public void CutsceneFadeIn (string Colour ){
+		if (FadeBackground == null) {
+			FadeBackground = GameObject.FindWithTag ("Fade");
+		}
+
 		FadeBackground.GetComponent<GUITexture>().enabled = true;
 		isFadingIn = true;
 		isFadingOut = false;
@@ -128,5 +150,7 @@ public class PortalScript : MonoBehaviour {
 		}
 
 	}
+
+
 
 }
