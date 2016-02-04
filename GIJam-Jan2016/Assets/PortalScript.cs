@@ -59,8 +59,6 @@ public class PortalScript : MonoBehaviour {
 			}
 		}
 
-	
-
 		if (isFadingIn) {
 			if (FadeColour == 0.0f) {
 				Timer.SetActive (false);
@@ -99,16 +97,11 @@ public class PortalScript : MonoBehaviour {
 					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 					PlayerScript.Dead = false;
 				} else if (FadeColour == 0.0f) {
-					GameManager.Level++;
-					GameManager.FinishedRound = false;
-					PlayerScript.Dead = false;
-					GameManager.CashIncrease += GameManager.CashIncreaseIncrease;
-
-					ZoomIn = false;
-
-					GameManager.TotalCash += GameManager.CashIncrease;
 					GameManager.Cash = GameManager.TotalCash;
+					GameManager.FinishedRound = false;
+					ZoomIn = false;
 					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					PlayerScript.Dead = false;
 				}
 
 

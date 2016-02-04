@@ -170,8 +170,9 @@ public	List<GameObject> Spawners = new List<GameObject>();
 		
 
 //		Debug.Log (Cash);
-		if (Input.GetKey(KeyCode.Escape)) {
-			Application.Quit ();
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.LoadLevel ("Menu");
+
 		}
 
 	

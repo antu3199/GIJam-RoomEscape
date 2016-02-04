@@ -15,9 +15,9 @@ public class MenacingTextScript : MonoBehaviour {
 
 		TTextObject.text = "";
 		if (GameManager.Level == 1) {
-			message = "A new sacrifice for the Ritual?\nArrow keys to move";
+			message = "A new sacrifice for the Ritual?\n(WASD keys to move)";
 		} else if (GameManager.Level == 2) {
-			message = "Or will you be the \"The One?\" to pass?\nAim mouse to use shield";
+			message = "Or will you be the \"The One?\" to pass?\n(Aim mouse to use shield)";
 		} else if (GameManager.Level == 3) {
 			message = "Can you <S<U<R<V<I<V<E till the end?";
 		} else if (GameManager.Level == 4) {

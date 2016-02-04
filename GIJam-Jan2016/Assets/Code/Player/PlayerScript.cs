@@ -22,12 +22,24 @@ public class PlayerScript : Singleton<PlayerScript> {
 	int counter;
 	float mpRegen = 1f;
 
+	public GameObject Portal;
+	float Fade = 0.0f;
+	public static bool isFading;
+
+	public GameObject Flame;
+	SpriteRenderer rend;
+	SpriteRenderer rend2;
+
+
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
-
+		rend = GetComponent<SpriteRenderer> ();
+		rend2 = Flame.GetComponent<SpriteRenderer> ();
 		hp = 100;
 		mp = 50;
+		isFading = false;
 
 		mpCounter = 20;
 		counter = 0;
@@ -38,48 +50,68 @@ public class PlayerScript : Singleton<PlayerScript> {
 	void Update () {
 	//	Debug.Log ("test2");
 
-		if( Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) ){
+		if (Dead == true) {
+			if (isFading == true) {
+				Fade += 0.02f;
+				rend.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 0.0f, 0.0f, Fade);
+				rend2.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 0.0f, 0.0f, Fade);
+				if (Fade >= 1.0f) {
+					Portal.SetActive (true);
+					Portal.GetComponent<SpriteRenderer> ().enabled = false;
+
+					isFading = false;
+					Portal.GetComponent<PortalScript> ().CutsceneFadeIn ("Black");
+				}
+			}
+
+
+
+
+
+
+		} else {
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W)) {
 			
-			rb.AddForce (Vector2.up * speed);
-		}
-		if( Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
+				rb.AddForce (Vector2.up * speed);
+			}
+			if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) {
 			
-			rb.AddForce (Vector2.down * speed);
-		}
-		if( Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)){
+				rb.AddForce (Vector2.down * speed);
+			}
+			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
 			
-			rb.AddForce (Vector2.left * speed);
-		}
-		if( Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)){
+				rb.AddForce (Vector2.left * speed);
+			}
+			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) {
 			
-			rb.AddForce (Vector2.right * speed);
-		}
-		if(Input.GetMouseButtonDown(0)){
-			if (mp >= shieldMp) {
-				createShield ();
-				mpFunc ();
-			} else {
-				Debug.Log ("No MP");
+				rb.AddForce (Vector2.right * speed);
+			}
+			if (Input.GetMouseButtonDown (0)) {
+				if (mp >= shieldMp) {
+					createShield ();
+					mpFunc ();
+				} else {
+					Debug.Log ("No MP");
+				}
+			}
+			if (Input.GetMouseButtonUp (0)) {
+				Debug.Log ("Bye shield.");
+				destroyShield ();
+			}
+			if (GameObject.Find ("Shield(Clone)") == null && mp < maxMp && counter >= mpCounter) {
+				mp += mpRegen;
+				GameObject mpBar = GameObject.Find ("MpBar");
+				MpScript mpSprite = mpBar.GetComponent<MpScript> ();
+				counter = 0;
+				mpSprite.changeMp (mp);
+			}
+			if (mp < maxMp) {
+				counter++;
+			}
+			if (GameObject.Find ("Shield(Clone)") != null) {
+				counter = 0;
 			}
 		}
-		if (Input.GetMouseButtonUp (0)) {
-			Debug.Log ("Bye shield.");
-			destroyShield ();
-		}
-		if (GameObject.Find("Shield(Clone)") == null && mp < maxMp && counter >= mpCounter) {
-			mp += mpRegen;
-			GameObject mpBar = GameObject.Find ("MpBar");
-			MpScript mpSprite = mpBar.GetComponent<MpScript> ();
-			counter = 0;
-			mpSprite.changeMp(mp);
-		}
-		if (mp < maxMp) {
-			counter++;
-		}
-		if (GameObject.Find ("Shield(Clone)") != null) {
-			counter = 0;
-		}
-
 	}
 	void OnCollisionEnter2D (Collision2D col){
 		if (col.gameObject.tag == "Bullet") {
@@ -96,9 +128,14 @@ public class PlayerScript : Singleton<PlayerScript> {
 		}
 	}
 	void checkHp() {
-		if (hp <= 0){
-			SceneManager.LoadScene("Game Over");
-			Debug.Log ("Game Over");
+		if (PlayerScript.Dead == false) {
+			if (hp <= 0) {
+				PlayerScript.Dead = true;
+				PlayerScript.isFading = true;
+				//PlayerScript.isFading = true;
+				//SceneManager.LoadScene("Game Over");
+				//Debug.Log ("Game Over");
+			}
 		}
 	}
 
