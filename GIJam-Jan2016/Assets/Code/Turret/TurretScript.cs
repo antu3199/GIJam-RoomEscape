@@ -54,7 +54,14 @@ public class TurretScript : MonoBehaviour
 	public int TurretType = 0;
 
 
-	IEnumerator Start ()
+    void Start()
+    {
+		rend = GetComponent<SpriteRenderer> ();
+		Player = GameObject.FindWithTag ("Player").transform;
+        StartCoroutine(StartCor());
+    }
+
+	IEnumerator StartCor ()
 	{
 		if (_StartOnAwake) {
 			if (0f < _StartOnAwakeDelay) {
@@ -63,9 +70,6 @@ public class TurretScript : MonoBehaviour
 			//NOTE: THIS STARTS SHOOTING ----------------------------------------
 			//StartShotRoutine();
 		}
-		rend = GetComponent<SpriteRenderer> ();
-		Player = GameObject.FindWithTag ("Player").transform;
-
 	}
 
 	void Update(){
